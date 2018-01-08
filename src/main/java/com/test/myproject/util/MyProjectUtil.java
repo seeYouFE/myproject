@@ -13,6 +13,22 @@ import java.util.Map;
 public class MyProjectUtil {
     private static final Logger logger = LoggerFactory.getLogger(MyProjectUtil.class);
 
+    public static String ALi_DOMAIN="http://syroom.oss-cn-beijing.aliyuncs.com/";
+    public static String MyProject_DOMAIN = "http://127.0.0.1:8080/";
+
+    public static String[] IMAFE_FILE_EXT=new String[]{"png","jpg","jpeg","bmp"};
+    public static String IMAGE_DIR = "D:/upload/";
+
+    public static  boolean isFileAllowed(String fileExt){
+
+        for(String ext:IMAFE_FILE_EXT){
+            if(ext.equals(fileExt)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String getJSONString(int code) {
         JSONObject json = new JSONObject();
         json.put("code", code);
