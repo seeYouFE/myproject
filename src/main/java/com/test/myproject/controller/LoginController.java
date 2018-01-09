@@ -1,5 +1,9 @@
 package com.test.myproject.controller;
 
+import com.test.myproject.asyn.EventModel;
+import com.test.myproject.asyn.EventProducer;
+import com.test.myproject.asyn.EventType;
+import com.test.myproject.model.User;
 import com.test.myproject.service.UserService;
 import com.test.myproject.util.MyProjectUtil;
 import org.slf4j.Logger;
@@ -20,6 +24,8 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(path = {"/reg/"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
@@ -62,7 +68,11 @@ public class LoginController {
                     cookie.setMaxAge(3600*24*5);
                 }
                 response.addCookie(cookie);
-                return MyProjectUtil.getJSONString(0,"登录成功");
+                User user = userService.getUser(username);
+                eventProducer.fireEvent(new
+                        EventModel(EventType.LOGIN).setActorId(user.getId())
+                        .setExt("username", "牛客").setExt("to", "304513696@qq.com"));
+                return MyProjectUtil.getJSONString(0, "成功");
 
             }else{
                 return MyProjectUtil.getJSONString(1,"登录失败");

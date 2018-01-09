@@ -26,6 +26,10 @@ public class NewsService {
         newsDAO.updateCommentCount(entityId, count);
     }
 
+    public void updateLikeCount(int entityId,int count){
+        newsDAO.updateLikeCount(entityId, count);
+    }
+
     public List<News> getLatestNews(int userId, int offset, int limit) {
         return newsDAO.selectByUserIdAndOffset(userId, offset, limit);
     }
